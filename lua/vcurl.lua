@@ -5,6 +5,20 @@ local config = require("config")
 
 local FILE = config.response_file
 
+M.setup = function(user_config)
+	if not user_config then
+		user_config = {}
+	end
+
+	if user_config.split == "horizontal" then
+		user_config.split = "split"
+	else
+		user_config.split = config.split
+	end
+
+	config = vim.tbl_deep_extend("force", config, user_config)
+end
+
 M.run = function()
 	-- Get the current line where the cursor is
 	local current_line = vim.api.nvim_get_current_line()
