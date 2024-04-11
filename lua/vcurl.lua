@@ -18,7 +18,7 @@ local function get_lines_until_empty_or_eof(line_number)
 		local line_text = vim.api.nvim_buf_get_lines(buf, line - 1, line, false)[1]
 
 		-- Check if the line is empty
-		if line_text == "" then
+		if line_text == "" or line_text:match("^ ") then
 			-- If empty, stop iterating
 			break
 		end
@@ -81,6 +81,7 @@ M.run_curl_and_open_vsplit = function()
 	content = string.gsub(content, "#[^\n]*\n", "")
 
 	local curl = string.gsub(content, "\n", "")
+	print("curl: ", curl)
 	curl = string.gsub(curl, "curl", "curl --silent")
 
 	local curl_output = vim.fn.system(curl .. " | jq")
