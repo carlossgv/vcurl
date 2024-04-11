@@ -37,7 +37,6 @@ local function find_and_set_curl_line(target_line_number)
 
 	-- Start iterating from the provided line number and move upwards
 	for line = target_line_number, 1, -1 do
-		print("line: ", line)
 		-- Get the line text
 		local line_text = vim.api.nvim_buf_get_lines(buf, line - 1, line, false)[1]
 
