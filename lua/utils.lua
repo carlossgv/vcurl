@@ -15,8 +15,11 @@ function M.get_lines_until_empty_or_eof(line_number)
 		-- Get the line text
 		local line_text = vim.api.nvim_buf_get_lines(buf, line - 1, line, false)[1]
 
+		-- remove whitespace from the beginning of the line
+		line_text = line_text:gsub("^%s+", "")
+
 		-- Check if the line is empty
-		if line_text == "" or line_text:match("^ ") then
+		if line_text == "" then
 			-- If empty, stop iterating
 			break
 		end
@@ -29,7 +32,6 @@ function M.get_lines_until_empty_or_eof(line_number)
 	return lines
 end
 
-
 function M.find_and_set_curl_line(target_line_number)
 	-- Get the buffer handle for the current buffer
 	local buf = vim.api.nvim_get_current_buf()
@@ -38,6 +40,8 @@ function M.find_and_set_curl_line(target_line_number)
 	for line = target_line_number, 1, -1 do
 		-- Get the line text
 		local line_text = vim.api.nvim_buf_get_lines(buf, line - 1, line, false)[1]
+		-- remove whitespace from the beginning of the line
+		line_text = line_text:gsub("^%s+", "")
 
 		-- Check if the line starts with "curl"
 		if line_text:match("^curl") then
@@ -48,7 +52,7 @@ function M.find_and_set_curl_line(target_line_number)
 		end
 
 		-- if line is empty or beginning of file, throw
-		if line_text == "" or line_text:match("^ ") or line == 1 then
+		if line_text == "" or line == 1 then
 			return
 		end
 	end
