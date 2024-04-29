@@ -23,10 +23,10 @@ const data = JSON.parse(jsonData);
 // Recursive function to generate cURL command for each item
 function generateCurl(data) {
   const curls = [];
-  const items = data.item;
+  const projects = data.item;
 
-  for (const item of items) {
-    const requests = item.item;
+  for (const project of projects) {
+    const requests = project.item;
     for (const request of requests) {
       // Constructing URL
       let urlData = request?.request?.url;
