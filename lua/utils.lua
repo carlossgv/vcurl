@@ -18,6 +18,11 @@ function M.get_lines_until_empty_or_eof(line_number)
 		-- remove whitespace from the beginning of the line
 		line_text = line_text:gsub("^%s+", "")
 
+        -- Check new curl line
+	    if line_text:match("^curl") and line > line_number then
+            break
+        end
+
 		-- Check if the line is empty
 		if line_text == "" then
 			-- If empty, stop iterating
